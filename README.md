@@ -34,8 +34,8 @@ $ source activate aind
 
 - Download a copy of the project files from GitHub and navigate to the project folder. (Note: if you've previously downloaded the repository for another project then you can skip the clone command. However, you should run `git pull` to receive any project updates since you cloned the repository.)
 ```
-(aind) $ git clone https://github.com/udacity/artificial-intelligence
-(aind) $ cd "artificial-intelligence/Projects/3_Game Playing"
+(aind) $ git clone https://github.com/udacity/cd0349-adversarial-search.git
+(aind) $ cd "starter"
 ```
 
 
