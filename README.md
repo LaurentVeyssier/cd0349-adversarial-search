@@ -35,6 +35,9 @@ fig #2: Example of first moves selection based on higher win rate of 60% or abov
 
 ![](example_high_win_rate_first_moves.png)
 
+fig #3: example of opening book moves, from initial move to position 104 till final victory.
+
+![](book.png)
 
 Step 2: Define the get_action() Method. This function is called once per turn for each player. The calling function handles the time limit. 
 
