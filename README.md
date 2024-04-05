@@ -5,7 +5,7 @@
 
 ## Synopsis
 
-In this project, you will experiment with adversarial search techniques by building an agent to play knights Isolation.  Unlike the examples in lecture where the players control tokens that move like chess queens, this version of Isolation gives each agent control over a single token that moves in L-shaped movements--like a knight in chess.
+This project experiments with adversarial search techniques by building an agent to play knights Isolation that moves in L-shaped movements--like a knight in chess.
 
 ### Isolation
 
@@ -15,26 +15,21 @@ In knights Isolation, tokens can move to any open cell that is 2-rows and 1-colu
 
 Finally, agents have a fixed time limit (150 milliseconds by default) to search for the best move and respond.  The search will be automatically cut off after the time limit expires, and the active agent will forfeit the game if it has not chosen a move.
 
-**You can find more information (including implementation details) about the in the Isolation library readme [here](/isolation/README.md).**
+**You can find more information about the Isolation library in the readme [here](/isolation/README.md).**
 
 
-## Getting Started (Workspaces)
+## Project steps
 
+Step 1: Building the opening book
+This book contains openings and in-game moves leading to victory. It is structured as a dictionary with {key : value} pairs as state and recommended next move. We can use our player to call on the opening book and improve win ratio over baseline (random moves).
 
-#### The get_action() Method
-This function is called once per turn for each player. The calling function handles the time limit and 
-```
-def get_action(self, state):
-    import random
-    self.queue.put(random.choice(state.actions()))
-```
+Step 2: Define the get_action() Method. This function is called once per turn for each player. The calling function handles the time limit. 
 
 
 
 #### Initialization Data
 Your agent will automatically read the contents of a file named `data.pickle` if it exists in the same folder as `my_custom_player.py`. The serialized object from the pickle file will be assigned to `self.data`. Your agent should not write to or modify the contents of the pickle file during search.
 
-The log file will record a warning message if there is no data file, however a data file is NOT required unless you need it for your opening book. (You are allowed to use the data file to provide _any_ initialization information to your agent; it is not limited to an opening book.)
 
 
 
