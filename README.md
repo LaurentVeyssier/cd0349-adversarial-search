@@ -27,10 +27,13 @@ Our opening book is constructed using 5000 randomized games, each up to 100 turn
 We repeat this process 10 times to fill up our book. The final opening book contains circa 28.000 moves corresponding to the winning sequences from an initial move with higher than average win rate. The opening book is stored locally in data.pickle file.
 The process is detailed in the notebook provided with the project.
 
-fig# 1: Ranking of best openings using win rate based on our sample games
+fig #1: Ranking of best openings using win rate based on our sample games
 
 ![](best_openings_win_rate.png)
 
+fig #2: Example of first moves selection based on higher win rate of 60% or above
+
+![](example_high_win_rate_first_moves.png)
 
 
 Step 2: Define the get_action() Method. This function is called once per turn for each player. The calling function handles the time limit. 
