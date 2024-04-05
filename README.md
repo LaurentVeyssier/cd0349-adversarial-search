@@ -28,7 +28,8 @@ We repeat this process 10 times to fill up our book. The final opening book cont
 The process is detailed in the notebook provided with the project.
 
 fig# 1: Ranking of best openings using win rate based on our sample games
-![](!best_openings_win_rate.png)
+
+![](best_openings_win_rate.png)
 
 
 
