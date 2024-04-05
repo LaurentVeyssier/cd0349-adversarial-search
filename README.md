@@ -26,7 +26,9 @@ This book contains openings and in-game moves leading to victory. It is structur
 Our opening book is constructed using 5000 randomized games, each up to 100 turns. We calculate the winning rate (win over loss) over our game samples for the same initial first moves. From there we select all winning sequences (player 0 wins the game) with win rate above 60%. Once we have a set of first moves and the following moves till victory, we retain these sequences to form our opening book using the hash signature of each state as a key.
 We repeat this process 10 times to fill up our book. The final opening book contains circa 28.000 moves corresponding to the winning sequences from an initial move with higher than average win rate. The opening book is stored locally in data.pickle file.
 The process is detailed in the notebook provided with the project.
-[Ranking of best openings using win rate based on our sample games](!best_openings_win_rate.png)
+
+fig# 1: Ranking of best openings using win rate based on our sample games
+![](!best_openings_win_rate.png)
 
 
 
