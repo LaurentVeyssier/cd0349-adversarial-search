@@ -1,6 +1,7 @@
 
 from sample_players import DataPlayer
 from isolation import Isolation,DebugState
+import pickle, os
 
 class CustomPlayer(DataPlayer):
     """ Implement your own agent to play knight's Isolation
@@ -42,8 +43,34 @@ class CustomPlayer(DataPlayer):
         # EXAMPLE: choose a random move without any search--this function MUST
         #          call self.queue.put(ACTION) at least once before time expires
         #          (the timer is automatically managed for you)
-        import random
-        self.queue.put(random.choice(state.actions()))
+        #import random
+        #self.queue.put(random.choice(state.actions()))
+
+        # check if book of openings exists, else create one
+        #if state.context is None:
+        if not os.path.exists("data.pickle"):
+                print('Book of openings not found, creating one...')
+                player1 = CustomPlayer(0)
+                player1.build_book( num_simulations=10,
+                                    NUM_ROUNDS=5_000,
+                                    depth_limit=100)
+                
+        with open("data.pickle", 'rb') as f:
+          self.data = pickle.load(f)
+
+        # if book of openings exists, play the best opening move
+        if state.board in self.data:
+            self.queue.put(self.data[state.board])
+            print("Playing best opening move...")
+        else:
+            a = self.alpha_beta_search(state, depth=4)
+            self.queue.put(a)
+            print(f"{state.player()} playing {a}")
+            print(DebugState.from_state(state.result(a)))
+
+
+
+
 
 
 
@@ -110,10 +137,10 @@ class CustomPlayer(DataPlayer):
             alpha = max(alpha, v)
         return v
 
-    def get_action(self, gameState, depth_limit):
+    '''def get_action(self, gameState, depth_limit):
         for depth in range(1, depth_limit + 1):
             action = self.alpha_beta_search(gameState, depth)
-            print("Depth: {} -> Action: {}".format(depth, action))
+            print("Depth: {} -> Action: {}".format(depth, action))'''
 
 
 
@@ -162,7 +189,7 @@ class CustomPlayer(DataPlayer):
         opening_book = pd.DataFrame()
 
         # Do n simulations to collect winning opening moves with rate > 60%
-        book_best_openings = []
+        book_best_openings = {}
         for _ in tqdm(range(num_simulations)):
           # build a book of openings
           book = build_table(NUM_ROUNDS, depth_limit)
@@ -218,7 +245,9 @@ class CustomPlayer(DataPlayer):
           # Now that we have collected only best openings, 
           # accumulate the winning opening moves into book_best_openings
           # go through all step in the book sample
-          for i, b in enumerate(tqdm(list(book))):
+          all_states, all_moves = list(book.keys()), list(book.values()) 
+          winning_openings = {}
+          for i, b in enumerate(tqdm(book)):
               # select only winning moves for player 0
               new_b = b.result(book[b])
               if new_b.terminal_test():
@@ -227,11 +256,12 @@ class CustomPlayer(DataPlayer):
                       num_moves = b.ply_count
                       try:
                           # we grab the full sequence of moves that led to this winning state
-                          initial_state = list(book)[i + num_moves - 1]
+                          initial_state = all_states[i + num_moves - 1]
                           initial_move = initial_state.locs[0]
                           # we keep the sequence only if the opening belongs to the best above 60% winning rate
                           if initial_move in opening_book.index:
-                              book_best_openings.extend(list(book)[i: i + num_moves])
+                              winning_openings = {s.board:m for s,m in zip(all_states[i: i + num_moves],all_moves[i: i + num_moves])}
+                              book_best_openings.update(winning_openings)
                       except:
                           pass
                           
@@ -241,9 +271,9 @@ class CustomPlayer(DataPlayer):
 
 
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     player1 = CustomPlayer(0)
     player1.build_book(num_simulations=10,
                        NUM_ROUNDS=5_000,
-                       depth_limit=100)
+                       depth_limit=100)'''
 

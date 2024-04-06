@@ -107,7 +107,7 @@ def main(args):
     test_agent = TEST_AGENTS[args.opponent.upper()]
     custom_agent = Agent(CustomPlayer, "Custom Agent")
     wins, num_games = play_matches(custom_agent, test_agent, args)
-
+    
     logger.info("Your agent won {:.1f}% of matches against {}".format(
        100. * wins / num_games, test_agent.name))
     print("Your agent won {:.1f}% of matches against {}".format(
